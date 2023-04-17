@@ -55,7 +55,7 @@ export class VehiclesController {
   })
   findAll(
     @Param('vehicleCategoryId') vehicleCategoryId: string,
-    @Param('notIdVehicle') notIdVehicle: string
+    @Param('notIdVehicle') notIdVehicle: string,
   ) {
     return this.vehiclesService.findAll(vehicleCategoryId, notIdVehicle);
   }
@@ -67,6 +67,15 @@ export class VehiclesController {
   })
   findAllListRouter() {
     return this.vehiclesService.findAllListRouter();
+  }
+
+  @Get('bests')
+  @ApiOperation({
+    summary: 'Get list Bests vehicles',
+    description: 'List all bests vehicle',
+  })
+  findAllBests() {
+    return this.vehiclesService.findAllBests();
   }
 
   @Get(':route')

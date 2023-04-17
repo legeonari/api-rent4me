@@ -60,7 +60,7 @@ export class UsersInterest extends Model<UsersInterest> {
 
   @AllowNull(true)
   @Column({
-    type: DataType.NUMBER,
+    type: DataType.INTEGER,
     comment: '',
   })
   period: number;

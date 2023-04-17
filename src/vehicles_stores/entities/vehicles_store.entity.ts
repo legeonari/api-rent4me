@@ -23,7 +23,7 @@ import { VehiclesStoresContent } from 'src/vehicles_stores_contents/entities/veh
   modelName: 'vehicles_stores',
 })
 @DefaultScope(() => ({
-  attributes: ['vehicleId', 'title', 'thumb', 'status'],
+  attributes: ['id', 'vehicleId', 'title', 'thumb', 'status'],
 }))
 export class VehiclesStore extends Model<VehiclesStore> {
   @PrimaryKey

@@ -42,29 +42,41 @@ export class VehiclesService {
     }
   }
 
+  findAllBests() {
+    return this.VehicleModel.findAll({
+      include: [
+        {
+          model: VehiclesMotor,
+          attributes: ['motorization'],
+        },
+      ],
+      attributes: ['route', 'name', 'thumb', 'subtitle'],
+      limit: 50,
+    });
+  }
 
   findAll(vehicleCategoryId: string, notIdVehicle: string) {
     return this.VehicleModel.findAll({
       where: {
         status: true,
-        // [Op.not]: [
-        //   {
-        //     id: notIdVehicle
-        //   }
-        // ],
+        [Op.not]: [
+          {
+            id: notIdVehicle,
+          },
+        ],
         vehicleCategoryId: {
-          [Op.or]: [vehicleCategoryId]
+          [Op.or]: [vehicleCategoryId],
         },
       },
       include: [
         {
           model: VehiclesMotor,
-          attributes: ['motorization']
+          attributes: ['motorization'],
         },
       ],
       attributes: ['route', 'name', 'thumb', 'subtitle'],
       limit: 10,
-    })
+    });
   }
 
   findAllListRouter() {
@@ -100,7 +112,7 @@ export class VehiclesService {
           },
           {
             model: VehiclesStore,
-            attributes: ['title', 'thumb'],
+            attributes: ['id', 'title', 'thumb'],
             include: [
               {
                 model: VehiclesStoresContent,
