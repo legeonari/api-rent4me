@@ -28,6 +28,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Roles } from 'src/guards/roles.decorator';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RoleGuard } from 'src/guards/roles.guards';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @ApiTags('Users')
 @ApiBearerAuth('Bearer')
@@ -44,6 +45,19 @@ export class UsersController {
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   createLead(@Body() createUserLeadDto: CreateUserLeadDto) {
     return this.usersService.createLead(createUserLeadDto);
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('admin')
+  @Post()
+  @ApiOperation({
+    summary: 'Create users',
+    description: 'Service Created users',
+  })
+  @ApiBody({ type: CreateUserDto })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)

@@ -1,15 +1,45 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { VehiclesOptionsItensService } from './vehicles_options_itens.service';
-import { CreateVehiclesOptionsItenDto } from './dto/create-vehicles_options_iten.dto';
-import { UpdateVehiclesOptionsItenDto } from './dto/update-vehicles_options_iten.dto';
+//Dependencies
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Controller, Get, Post, Body, UseGuards, Param } from '@nestjs/common';
 
+//Services
+import { VehiclesOptionsItensService } from './vehicles_options_itens.service';
+
+//Dtos
+import { CreateVehiclesOptionsItenDto } from './dto/create-vehicles_options_iten.dto';
+
+//Guards
+import { Roles } from 'src/guards/roles.decorator';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { RoleGuard } from 'src/guards/roles.guards';
+
+@ApiTags('Vehicle Options itens')
+@ApiBearerAuth('Bearer')
 @Controller('vehicles-options-itens')
 export class VehiclesOptionsItensController {
-  constructor(private readonly vehiclesOptionsItensService: VehiclesOptionsItensService) {}
+  constructor(
+    private readonly vehiclesOptionsItensService: VehiclesOptionsItensService,
+  ) {}
 
   @Post()
-  create(@Body() createVehiclesOptionsItenDto: CreateVehiclesOptionsItenDto) {
-    return this.vehiclesOptionsItensService.create(createVehiclesOptionsItenDto);
+  // @UseGuards(JwtAuthGuard, RoleGuard)
+  // @Roles('admin')
+  @ApiOperation({
+    summary: 'Create options vehicle',
+    description: 'Service Created options vehicles',
+  })
+  @ApiBody({ type: CreateVehiclesOptionsItenDto })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  create(@Body() createVehiclesOptionsItenDto: [CreateVehiclesOptionsItenDto]) {
+    return this.vehiclesOptionsItensService.create(
+      createVehiclesOptionsItenDto,
+    );
   }
 
   @Get()
@@ -19,16 +49,6 @@ export class VehiclesOptionsItensController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.vehiclesOptionsItensService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVehiclesOptionsItenDto: UpdateVehiclesOptionsItenDto) {
-    return this.vehiclesOptionsItensService.update(+id, updateVehiclesOptionsItenDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.vehiclesOptionsItensService.remove(+id);
+    return this.vehiclesOptionsItensService.findOne(id);
   }
 }

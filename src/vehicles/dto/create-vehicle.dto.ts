@@ -20,6 +20,15 @@ export class CreateVehicleDto {
   vehicleCategoryId: string;
 
   @ApiProperty({
+    description: 'Id Vehicle brand',
+    example: 'c3da61e1-2855-4bb1-9ed1-94d563a319a3',
+    type: String,
+  })
+  @IsNotEmpty()
+  @IsString()
+  vehicleBrandId: string;
+
+  @ApiProperty({
     description: 'Name car',
     example: 'Celta',
     type: String,

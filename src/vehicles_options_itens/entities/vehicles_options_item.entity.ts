@@ -17,7 +17,7 @@ import {
   modelName: 'vehicles_options_itens',
 })
 @DefaultScope(() => ({
-  attributes: ['name', 'icon'],
+  attributes: ['id', 'name', 'icon'],
 }))
 export class VehiclesOptionsIten extends Model<VehiclesOptionsIten> {
   @PrimaryKey

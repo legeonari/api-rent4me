@@ -46,9 +46,7 @@ export class UsersLevels extends Model<UsersLevels> {
   @BeforeCreate
   static addImageIcon(instance: UsersLevels) {
     instance.thumb = !instance.thumb
-      ? `https://fakeimg.pl/250/0e0e0e/f2f2f2/?retina=1&font_size=150&text=${instance.name
-          .charAt(0)
-          .toUpperCase()}&font=bebas=`
+      ? `https://robohash.org/${instance.name}`
       : instance.thumb;
   }
   @AllowNull(true)

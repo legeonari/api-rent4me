@@ -12,16 +12,15 @@ import {
   CreatedAt,
   UpdatedAt,
   DeletedAt,
-  DefaultScope,
 } from 'sequelize-typescript';
 
+//Entity
+import { VehiclesCategory } from 'src/vehicles_categories/entities/vehicles_category.entity';
+
 @Table({
-  modelName: 'vehicles_category',
+  modelName: 'vehicles_brand',
 })
-@DefaultScope(() => ({
-  attributes: ['name', 'thumb', 'description', 'status', 'route'],
-}))
-export class VehiclesCategory extends Model<VehiclesCategory> {
+export class VehiclesBrand extends Model<VehiclesBrand> {
   @PrimaryKey
   @Default(DataType.UUIDV4)
   @Column(DataType.UUID)

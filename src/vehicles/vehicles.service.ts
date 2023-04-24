@@ -55,7 +55,7 @@ export class VehiclesService {
     });
   }
 
-  findAll(vehicleCategoryId: string, notIdVehicle: string) {
+  findVehicleCategory(vehicleCategoryId: string, notIdVehicle: string) {
     return this.VehicleModel.findAll({
       where: {
         status: true,
@@ -86,6 +86,22 @@ export class VehiclesService {
         where: {
           status: true,
         },
+      });
+    } catch (e) {
+      return e;
+    }
+  }
+
+  findAll() {
+    try {
+      return this.VehicleModel.findAll({
+        include: [
+          {
+            model: VehiclesMotor,
+            attributes: ['motorization'],
+          },
+        ],
+        attributes: ['route', 'name', 'thumb', 'subtitle', 'status'],
       });
     } catch (e) {
       return e;

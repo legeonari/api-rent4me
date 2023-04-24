@@ -27,6 +27,7 @@ import { VehiclesMotor } from 'src/vehicles_motor/entities/vehicles_motor.entity
 import { VehiclesStore } from 'src/vehicles_stores/entities/vehicles_store.entity';
 import { Offer } from 'src/offers/entities/offer.entity';
 import { OfferDetail } from 'src/offers_details/entities/offers_detail.entity';
+import { VehiclesBrand } from 'src/vehicles_brand/entities/vehicles_brand.entity';
 
 @Table({
   modelName: 'vehicles',
@@ -45,9 +46,21 @@ export class Vehicle extends Model<Vehicle> {
   @AllowNull(false)
   @Column({
     type: DataType.UUID,
-    comment: 'User ID',
+    comment: 'Category',
   })
   vehicleCategoryId: string;
+
+  @BelongsTo(() => VehiclesBrand, {
+    foreignKey: 'vehicleBrandId',
+    targetKey: 'id',
+    as: 'brand',
+  })
+  @AllowNull(false)
+  @Column({
+    type: DataType.UUID,
+    comment: 'Brand',
+  })
+  vehicleBrandId: string;
 
   @AllowNull(false)
   @Column({

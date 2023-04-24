@@ -53,11 +53,14 @@ export class VehiclesController {
     summary: 'Get vehicle Relaptions by Category',
     description: 'List vehicle Relaptions by Category',
   })
-  findAll(
+  findVehicleCategory(
     @Param('vehicleCategoryId') vehicleCategoryId: string,
     @Param('notIdVehicle') notIdVehicle: string,
   ) {
-    return this.vehiclesService.findAll(vehicleCategoryId, notIdVehicle);
+    return this.vehiclesService.findVehicleCategory(
+      vehicleCategoryId,
+      notIdVehicle,
+    );
   }
 
   @Get('list-router')
@@ -85,6 +88,15 @@ export class VehiclesController {
   })
   findOne(@Param('route') route: string) {
     return this.vehiclesService.findOne(route);
+  }
+
+  @Get('')
+  @ApiOperation({
+    summary: 'Get list vehicle routers',
+    description: 'List all routers vehicle',
+  })
+  findAll() {
+    return this.vehiclesService.findAll();
   }
 
   @Patch(':id')

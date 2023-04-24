@@ -16,7 +16,7 @@ import {
   DeletedAt,
   BeforeUpdate,
   HasMany,
-  DefaultScope
+  DefaultScope,
 } from 'sequelize-typescript';
 import { UsersContract } from 'src/users-contracts/entities/users-contract.entity';
 import { UsersDetails } from 'src/users-details/entities/users-detail.entity';
@@ -114,7 +114,7 @@ export class Users extends Model<Users> {
   @BeforeCreate
   static addImageIcon(instance: Users) {
     instance.thumb = !instance.thumb
-      ? `https://api.dicebear.com/5.x/thumbs/svg?seed=${instance.id}`
+      ? `https://api.dicebear.com/6.x/fun-emoji/svg?seed=${instance.id}&flip=true&backgroundColor=d1d4f9,c0aede&randomizeIds=true&mouth=cute,faceMask,kissHeart,lilSmile,pissed,plain,shout,smileLol,smileTeeth,tongueOut,wideSmile`
       : instance.thumb;
   }
   @AllowNull(true)

@@ -21,6 +21,7 @@ export class AuthService {
 
   async login(userParams: LoginUserDto): Promise<any> {
     const user = await this.UserService.auth(userParams);
+
     if (user) {
       if (await bcrypt.compareSync(userParams.password, user.password)) {
         const jwt = sign(
@@ -30,6 +31,16 @@ export class AuthService {
           },
           process.env.JWT_SECRET,
         );
+
+        console.log({
+          user: {
+            id: user.id,
+            name: user.name,
+            thumb: user.thumb,
+          },
+          role: user.userLevelId,
+          access_token: jwt,
+        });
 
         return {
           user: {

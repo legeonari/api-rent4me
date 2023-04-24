@@ -39,6 +39,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from 'src/auth/strategies/jwt.strategy';
 import { UmblerTalkWhatsappModule } from './umbler_talk_whatsapp/umbler_talk_whatsapp.module';
 import { VehiclesGalleryModule } from './vehicles_gallery/vehicles_gallery.module';
+import { VehiclesBrandModule } from './vehicles_brand/vehicles_brand.module';
 
 @Module({
   imports: [
@@ -86,6 +87,7 @@ import { VehiclesGalleryModule } from './vehicles_gallery/vehicles_gallery.modul
     AuthModule,
     UmblerTalkWhatsappModule,
     VehiclesGalleryModule,
+    VehiclesBrandModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtStrategy],

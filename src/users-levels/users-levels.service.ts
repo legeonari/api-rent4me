@@ -1,15 +1,35 @@
+//Dependencies
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+
+//Dtos
 import { CreateUsersLevelDto } from './dto/create-users-level.dto';
 import { UpdateUsersLevelDto } from './dto/update-users-level.dto';
 
+//Entity
+import { UsersLevels } from './entities/users-level.entity';
+
 @Injectable()
 export class UsersLevelsService {
+  constructor(
+    @InjectModel(UsersLevels)
+    private usersLevels: typeof UsersLevels,
+  ) {}
+
   create(createUsersLevelDto: CreateUsersLevelDto) {
-    return 'This action adds a new usersLevel';
+    try {
+      return this.usersLevels.create(createUsersLevelDto);
+    } catch (e) {
+      return e;
+    }
   }
 
   findAll() {
-    return `This action returns all usersLevels`;
+    try {
+      return this.usersLevels.findAll();
+    } catch (e) {
+      return e;
+    }
   }
 
   findOne(id: number) {

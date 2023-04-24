@@ -1,11 +1,11 @@
 //Dependencies
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 
-export class CreateUsersLevelDto {
+export class CreateVehiclesBrandDto {
   @ApiProperty({
     description: 'Name',
-    example: 'Administrador',
+    example: 'Chevrolet',
     type: String,
   })
   @IsString()
@@ -14,7 +14,7 @@ export class CreateUsersLevelDto {
 
   @ApiProperty({
     description: 'Description',
-    example: 'Nivle de acesso máximo',
+    example: 'A Chevrolet...',
     type: String,
   })
   @IsString()
@@ -22,11 +22,12 @@ export class CreateUsersLevelDto {
   description: string;
 
   @ApiProperty({
-    description: 'Perfil public',
-    example: false,
-    type: Boolean,
+    description: 'thumb',
+    example: 'URL thumb',
+    type: String,
+    required: false,
   })
-  @IsBoolean()
-  @IsOptional()
-  public: boolean;
+  @IsString()
+  @IsNotEmpty()
+  thumb: string;
 }

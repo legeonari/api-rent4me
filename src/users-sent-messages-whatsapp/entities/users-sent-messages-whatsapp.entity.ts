@@ -78,7 +78,7 @@ export class UsersSentMessagesWhatsapp extends Model<UsersSentMessagesWhatsapp> 
   @Column({
     type: DataType.BOOLEAN,
     comment: 'Status send message',
-    defaultValue: false
+    defaultValue: false,
   })
   status: boolean;
 
@@ -93,6 +93,5 @@ export class UsersSentMessagesWhatsapp extends Model<UsersSentMessagesWhatsapp> 
   @DeletedAt
   deletedAt!: Date;
 }
-
 
 // ALTER TABLE users_sent_messages_whatsapps MODIFY COLUMN message LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
