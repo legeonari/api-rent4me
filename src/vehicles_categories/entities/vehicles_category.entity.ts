@@ -19,7 +19,7 @@ import {
   modelName: 'vehicles_category',
 })
 @DefaultScope(() => ({
-  attributes: ['name', 'thumb', 'description', 'status', 'route'],
+  attributes: ['id', 'name', 'thumb', 'description', 'status', 'route'],
 }))
 export class VehiclesCategory extends Model<VehiclesCategory> {
   @PrimaryKey

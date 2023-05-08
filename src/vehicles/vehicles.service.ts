@@ -16,6 +16,13 @@ import { VehiclesStore } from 'src/vehicles_stores/entities/vehicles_store.entit
 import { VehiclesStoresContent } from 'src/vehicles_stores_contents/entities/vehicles_stores_content.entity';
 import { VehiclesGallery } from 'src/vehicles_gallery/entities/vehicles_gallery.entity';
 import { VehiclesOptionsIten } from 'src/vehicles_options_itens/entities/vehicles_options_item.entity';
+import { VehiclesBrand } from 'src/vehicles_brand/entities/vehicles_brand.entity';
+import { VehiclesCategory } from 'src/vehicles_categories/entities/vehicles_category.entity';
+import { FilesImage } from 'src/files_images/entities/files_image.entity';
+import { FilterVehicleDto } from './dto/filter-vehicle.dto';
+import { Offer } from 'src/offers/entities/offer.entity';
+import { OfferDetail } from 'src/offers_details/entities/offers_detail.entity';
+import { OffersPromotion } from 'src/offers_promotion/entities/offers_promotion.entity';
 
 @Injectable()
 export class VehiclesService {
@@ -42,12 +49,73 @@ export class VehiclesService {
     }
   }
 
+  findAllVehicleOffers(filter: FilterVehicleDto) {
+    try {
+      const where = {};
+      if (filter.name)
+        Object.assign(where, {
+          name: {
+            [Op.substring]: filter.name,
+          },
+        });
+
+      return this.VehicleModel.findAndCountAll({
+        include: [
+          {
+            model: VehiclesCategory,
+            attributes: ['name'],
+          },
+          {
+            model: FilesImage,
+            attributes: ['size65x65', 'size450x270', 'size450x300'],
+          },
+          {
+            model: Offer,
+            include: [
+              {
+                model: OfferDetail,
+              },
+              {
+                model: OffersPromotion,
+              },
+            ],
+          },
+        ],
+        where,
+        offset: !!filter.page
+          ? parseInt(filter.limit) * parseInt(filter.page)
+          : 0,
+        limit: parseInt(filter.limit) || 15,
+        attributes: ['id', 'route', 'name', 'thumb', 'subtitle', 'status'],
+      });
+    } catch (e) {
+      return e;
+    }
+  }
+
   findAllBests() {
     return this.VehicleModel.findAll({
       include: [
         {
           model: VehiclesMotor,
-          attributes: ['motorization'],
+          attributes: ['motorization', 'gearshift'],
+        },
+        {
+          model: FilesImage,
+          attributes: ['size450x270', 'size450x300'],
+        },
+        {
+          model: FilesImage,
+          attributes: ['size450x270', 'size450x300'],
+        },
+        {
+          model: OfferDetail,
+          order: [['price', 'ASC']],
+          attributes: ['period', 'mileage', 'price'],
+          limit: 1,
+          where: {
+            status: true,
+          },
         },
       ],
       attributes: ['route', 'name', 'thumb', 'subtitle'],
@@ -73,6 +141,10 @@ export class VehiclesService {
           model: VehiclesMotor,
           attributes: ['motorization'],
         },
+        {
+          model: FilesImage,
+          attributes: ['size450x270', 'size450x300'],
+        },
       ],
       attributes: ['route', 'name', 'thumb', 'subtitle'],
       limit: 10,
@@ -92,16 +164,41 @@ export class VehiclesService {
     }
   }
 
-  findAll() {
+  findAll(filter: FilterVehicleDto) {
     try {
-      return this.VehicleModel.findAll({
+      const where = {};
+      if (filter.name)
+        Object.assign(where, {
+          name: {
+            [Op.substring]: filter.name,
+          },
+        });
+
+      return this.VehicleModel.findAndCountAll({
         include: [
           {
             model: VehiclesMotor,
             attributes: ['motorization'],
           },
+          {
+            model: VehiclesBrand,
+            attributes: ['name'],
+          },
+          {
+            model: VehiclesCategory,
+            attributes: ['name'],
+          },
+          {
+            model: FilesImage,
+            attributes: ['size65x65', 'size450x270', 'size450x300'],
+          },
         ],
-        attributes: ['route', 'name', 'thumb', 'subtitle', 'status'],
+        where,
+        offset: !!filter.page
+          ? parseInt(filter.limit) * parseInt(filter.page)
+          : 0,
+        limit: parseInt(filter.limit) || 15,
+        attributes: ['id', 'route', 'name', 'thumb', 'subtitle', 'status'],
       });
     } catch (e) {
       return e;
@@ -117,6 +214,7 @@ export class VehiclesService {
           'vehicleCategoryId',
           'about',
           'route',
+          'status',
           'thumb',
           'subtitle',
           'tags',
@@ -125,14 +223,30 @@ export class VehiclesService {
           {
             model: VehiclesGallery,
             attributes: ['title', 'description', 'file'],
+            include: [
+              {
+                model: FilesImage,
+                attributes: ['size65x65', 'size450x270', 'size450x300'],
+              },
+            ],
           },
           {
             model: VehiclesStore,
             attributes: ['id', 'title', 'thumb'],
             include: [
               {
+                model: FilesImage,
+                attributes: ['size65x65', 'size450x270', 'size450x300'],
+              },
+              {
                 model: VehiclesStoresContent,
                 attributes: ['title', 'file'],
+                include: [
+                  {
+                    model: FilesImage,
+                    attributes: ['size65x65', 'size450x270', 'size450x300'],
+                  },
+                ],
               },
             ],
           },
@@ -145,6 +259,10 @@ export class VehiclesService {
           },
           {
             model: VehiclesMotor,
+          },
+          {
+            model: FilesImage,
+            attributes: ['size65x65', 'size450x270', 'size450x300'],
           },
         ],
         where: {

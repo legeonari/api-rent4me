@@ -25,7 +25,13 @@ export class VehiclesBrandService {
   }
 
   findAll() {
-    return `This action returns all vehiclesBrand`;
+    try {
+      return this.vehiclesBrand.findAll({
+        attributes: ['id', 'name', 'description', 'thumb', 'status', 'route'],
+      });
+    } catch (e) {
+      return e;
+    }
   }
 
   findOne(id: number) {

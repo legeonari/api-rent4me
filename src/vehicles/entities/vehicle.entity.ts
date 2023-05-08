@@ -28,6 +28,7 @@ import { VehiclesStore } from 'src/vehicles_stores/entities/vehicles_store.entit
 import { Offer } from 'src/offers/entities/offer.entity';
 import { OfferDetail } from 'src/offers_details/entities/offers_detail.entity';
 import { VehiclesBrand } from 'src/vehicles_brand/entities/vehicles_brand.entity';
+import { FilesImage } from 'src/files_images/entities/files_image.entity';
 
 @Table({
   modelName: 'vehicles',
@@ -90,9 +91,14 @@ export class Vehicle extends Model<Vehicle> {
   })
   about: string;
 
+  @BelongsTo(() => FilesImage, {
+    foreignKey: 'thumb',
+    targetKey: 'id',
+    as: 'image',
+  })
   @AllowNull(false)
   @Column({
-    type: DataType.STRING,
+    type: DataType.UUID,
     comment: 'thumb',
   })
   thumb: string;

@@ -9,6 +9,7 @@ import {
   AllowNull,
   BelongsTo,
 } from 'sequelize-typescript';
+import { FilesImage } from 'src/files_images/entities/files_image.entity';
 
 //Entity
 import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
@@ -48,10 +49,15 @@ export class VehiclesGallery extends Model<VehiclesGallery> {
   })
   description: string;
 
+  @BelongsTo(() => FilesImage, {
+    foreignKey: 'file',
+    targetKey: 'id',
+    as: 'image',
+  })
   @AllowNull(false)
   @Column({
-    type: DataType.STRING,
-    comment: 'Image',
+    type: DataType.UUID,
+    comment: 'thumb',
   })
   file: string;
 

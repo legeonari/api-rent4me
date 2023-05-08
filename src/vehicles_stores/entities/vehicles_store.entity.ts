@@ -14,6 +14,7 @@ import {
   DeletedAt,
   HasMany,
 } from 'sequelize-typescript';
+import { FilesImage } from 'src/files_images/entities/files_image.entity';
 
 //Entity
 import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
@@ -50,10 +51,15 @@ export class VehiclesStore extends Model<VehiclesStore> {
   })
   title: string;
 
+  @BelongsTo(() => FilesImage, {
+    foreignKey: 'thumb',
+    targetKey: 'id',
+    as: 'image',
+  })
   @AllowNull(false)
   @Column({
-    type: DataType.STRING,
-    comment: 'Thumb',
+    type: DataType.UUID,
+    comment: 'thumb',
   })
   thumb: string;
 

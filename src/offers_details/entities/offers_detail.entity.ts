@@ -116,7 +116,7 @@ export class OfferDetail extends Model<OfferDetail> {
   status: boolean;
 
   @HasMany(() => OffersPromotion, 'offerId')
-  promotion;
+  offersPromotion;
 
   @CreatedAt
   @Column

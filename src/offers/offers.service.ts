@@ -8,6 +8,9 @@ import { UpdateOfferDto } from './dto/update-offer.dto';
 
 //Entity
 import { Offer } from './entities/offer.entity';
+import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
+import { OfferDetail } from 'src/offers_details/entities/offers_detail.entity';
+import { OffersPromotion } from 'src/offers_promotion/entities/offers_promotion.entity';
 
 @Injectable()
 export class OffersService {
@@ -17,7 +20,33 @@ export class OffersService {
   ) {}
 
   create(createOfferDto: CreateOfferDto) {
-    return 'This action adds a new offer';
+    try {
+      return this.OffersModel.create(createOfferDto, {
+        include: [OfferDetail, OffersPromotion],
+      });
+    } catch (e) {
+      return e;
+    }
+  }
+
+  findAll() {
+    return this.OffersModel.findAndCountAll({
+      group: ['vehicleId', 'partnerId'],
+      include: [
+        {
+          model: Vehicle,
+          as: 'vehicle',
+          attributes: [
+            'id',
+            'name',
+            'vehicleBrandId',
+            'thumb',
+            'route',
+            'status',
+          ],
+        },
+      ],
+    });
   }
 
   findAllVehicle(partnerId: string) {

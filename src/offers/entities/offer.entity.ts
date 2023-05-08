@@ -19,6 +19,7 @@ import { Vehicle } from 'src/vehicles/entities/vehicle.entity';
 import { Partner } from 'src/partners/entities/partner.entity';
 import { VehiclesCategory } from 'src/vehicles_categories/entities/vehicles_category.entity';
 import { OfferDetail } from 'src/offers_details/entities/offers_detail.entity';
+import { OffersPromotion } from 'src/offers_promotion/entities/offers_promotion.entity';
 
 @Table({
   modelName: 'offers',
@@ -75,6 +76,9 @@ export class Offer extends Model<Offer> {
 
   @HasMany(() => OfferDetail, 'offerId')
   offersDetail;
+
+  @HasMany(() => OffersPromotion, 'offerId')
+  offersPromotion;
 
   @CreatedAt
   @Column

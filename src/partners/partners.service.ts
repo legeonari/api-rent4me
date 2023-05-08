@@ -1,26 +1,34 @@
+//Dependencies
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+
+//Dto
 import { CreatePartnerDto } from './dto/create-partner.dto';
 import { UpdatePartnerDto } from './dto/update-partner.dto';
 
+//Entity
+import { Partner } from './entities/partner.entity';
+
 @Injectable()
 export class PartnersService {
+  constructor(
+    @InjectModel(Partner)
+    private PartnerModel: typeof Partner,
+  ) {}
+
   create(createPartnerDto: CreatePartnerDto) {
-    return 'This action adds a new partner';
+    try {
+      return this.PartnerModel.create(createPartnerDto);
+    } catch (e) {
+      return e;
+    }
   }
 
   findAll() {
-    return `This action returns all partners`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} partner`;
-  }
-
-  update(id: number, updatePartnerDto: UpdatePartnerDto) {
-    return `This action updates a #${id} partner`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} partner`;
+    try {
+      return this.PartnerModel.findAndCountAll({});
+    } catch (e) {
+      return e;
+    }
   }
 }

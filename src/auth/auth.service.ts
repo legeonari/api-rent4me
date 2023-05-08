@@ -32,16 +32,6 @@ export class AuthService {
           process.env.JWT_SECRET,
         );
 
-        console.log({
-          user: {
-            id: user.id,
-            name: user.name,
-            thumb: user.thumb,
-          },
-          role: user.userLevelId,
-          access_token: jwt,
-        });
-
         return {
           user: {
             id: user.id,

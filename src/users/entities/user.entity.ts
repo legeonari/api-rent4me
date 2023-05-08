@@ -114,7 +114,7 @@ export class Users extends Model<Users> {
   @BeforeCreate
   static addImageIcon(instance: Users) {
     instance.thumb = !instance.thumb
-      ? `https://api.dicebear.com/6.x/fun-emoji/svg?seed=${instance.id}&flip=true&backgroundColor=d1d4f9,c0aede&randomizeIds=true&mouth=cute,faceMask,kissHeart,lilSmile,pissed,plain,shout,smileLol,smileTeeth,tongueOut,wideSmile`
+      ? `https://api.dicebear.com/6.x/initials/svg?seed=${instance.name}&backgroundColor=5e35b1,8e24aa&fontFamily=Courier%20New&fontSize=41&fontWeight=40`
       : instance.thumb;
   }
   @AllowNull(true)

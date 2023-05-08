@@ -11,7 +11,9 @@ import {
   UpdatedAt,
   DeletedAt,
   DefaultScope,
+  BelongsTo,
 } from 'sequelize-typescript';
+import { FilesImage } from 'src/files_images/entities/files_image.entity';
 
 @Table({
   modelName: 'partners',
@@ -24,7 +26,7 @@ import {
     'cnpj',
     'logo',
     'primaryColor',
-    'secuodaryColor',
+    'secondaryColor',
     'site',
     'createdAt',
   ],
@@ -56,10 +58,15 @@ export class Partner extends Model<Partner> {
   })
   cnpj: string;
 
+  @BelongsTo(() => FilesImage, {
+    foreignKey: 'thumb',
+    targetKey: 'id',
+    as: 'image',
+  })
   @AllowNull(false)
   @Column({
-    type: DataType.STRING,
-    comment: 'Logo partner',
+    type: DataType.UUID,
+    comment: 'thumb',
   })
   logo: string;
 
@@ -75,7 +82,7 @@ export class Partner extends Model<Partner> {
     type: DataType.STRING,
     comment: 'Secondary color',
   })
-  secuodaryColor: string;
+  secondaryColor: string;
 
   @AllowNull(false)
   @Column({

@@ -26,8 +26,8 @@ export class VehiclesBrandController {
   constructor(private readonly vehiclesBrandService: VehiclesBrandService) {}
 
   @Post()
-  // @UseGuards(JwtAuthGuard, RoleGuard)
-  // @Roles('admin')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('admin')
   @ApiOperation({
     summary: 'Create brands vehicle',
     description: 'Service Created brands vehicles',

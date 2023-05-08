@@ -26,6 +26,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: corsConfig,
+    bodyParser: true,
   });
 
   //Configs Swagger

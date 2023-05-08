@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/sequelize';
 
 //Dtos
 import { CreateVehiclesCategoryDto } from './dto/create-vehicles_category.dto';
-import { UpdateVehiclesCategoryDto } from './dto/update-vehicles_category.dto';
 
 //Entity
 import { VehiclesCategory } from './entities/vehicles_category.entity';

@@ -16,6 +16,7 @@ import {
 
 //Entity
 import { VehiclesStore } from 'src/vehicles_stores/entities/vehicles_store.entity';
+import { FilesImage } from 'src/files_images/entities/files_image.entity';
 
 @Table({
   modelName: 'vehicles_stores_contents',
@@ -55,6 +56,11 @@ export class VehiclesStoresContent extends Model<VehiclesStoresContent> {
   })
   description: string;
 
+  @BelongsTo(() => FilesImage, {
+    foreignKey: 'file',
+    targetKey: 'id',
+    as: 'image',
+  })
   @AllowNull(false)
   @Column({
     type: DataType.STRING,

@@ -3,6 +3,7 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiOperation,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -15,6 +16,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 
 //Services
@@ -28,6 +30,7 @@ import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { Roles } from 'src/guards/roles.decorator';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RoleGuard } from 'src/guards/roles.guards';
+import { FilterVehicleDto } from './dto/filter-vehicle.dto';
 
 @ApiTags('Vehicles')
 @ApiBearerAuth('Bearer')
@@ -63,6 +66,19 @@ export class VehiclesController {
     );
   }
 
+  @Get('offers/')
+  @ApiOperation({
+    summary: 'Get vehicle and offers',
+    description: 'List all vehicle and offers',
+  })
+  @ApiQuery({
+    type: FilterVehicleDto,
+    required: false,
+  })
+  findAllVehicleOffers(@Query() filter) {
+    return this.vehiclesService.findAllVehicleOffers(filter);
+  }
+
   @Get('list-router')
   @ApiOperation({
     summary: 'Get list vehicle routers',
@@ -90,13 +106,17 @@ export class VehiclesController {
     return this.vehiclesService.findOne(route);
   }
 
-  @Get('')
+  @Get()
   @ApiOperation({
     summary: 'Get list vehicle routers',
     description: 'List all routers vehicle',
   })
-  findAll() {
-    return this.vehiclesService.findAll();
+  @ApiQuery({
+    type: FilterVehicleDto,
+    required: false,
+  })
+  findAll(@Query() filter) {
+    return this.vehiclesService.findAll(filter);
   }
 
   @Patch(':id')
