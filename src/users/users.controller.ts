@@ -47,8 +47,8 @@ export class UsersController {
     return this.usersService.createLead(createUserLeadDto);
   }
 
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles('admin')
+  // @UseGuards(JwtAuthGuard, RoleGuard)
+  // @Roles('admin')
   @Post()
   @ApiOperation({
     summary: 'Create users',

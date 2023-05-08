@@ -22,6 +22,15 @@ export class CreateUserDto {
   userLevelId: string;
 
   @ApiProperty({
+    description: 'Password user',
+    example: '123Mudar@',
+    type: String,
+  })
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+
+  @ApiProperty({
     description: 'E-mail',
     example: 'edwin.reule@rent4me.com.br',
     type: String,
