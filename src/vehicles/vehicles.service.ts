@@ -97,6 +97,10 @@ export class VehiclesService {
     return this.VehicleModel.findAll({
       include: [
         {
+          model: VehiclesBrand,
+          attributes: ['name'],
+        },
+        {
           model: VehiclesMotor,
           attributes: ['motorization', 'gearshift'],
         },
@@ -137,6 +141,10 @@ export class VehiclesService {
         },
       },
       include: [
+        {
+          model: VehiclesBrand,
+          attributes: ['name'],
+        },
         {
           model: VehiclesMotor,
           attributes: ['motorization'],
@@ -258,6 +266,10 @@ export class VehiclesService {
           {
             model: VehiclesItem,
             include: [VehiclesOptionsIten],
+          },
+          {
+            model: VehiclesBrand,
+            attributes: ['name'],
           },
           {
             model: VehiclesDimension,
