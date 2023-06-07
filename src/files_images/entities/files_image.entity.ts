@@ -33,35 +33,28 @@ export class FilesImage extends Model<FilesImage> {
     type: DataType.STRING,
     comment: 'Original',
   })
-  original: string;
+  image: string;
 
   @AllowNull(true)
   @Column({
     type: DataType.STRING,
-    comment: 'Thumb Mini',
+    comment: 'Name',
   })
-  size65x65: string;
+  name: string;
 
   @AllowNull(true)
   @Column({
     type: DataType.STRING,
-    comment: 'Gallery',
+    comment: 'Base url',
   })
-  size450x300: string;
+  baseUrl: string;
 
   @AllowNull(true)
   @Column({
     type: DataType.STRING,
-    comment: 'Store',
+    comment: 'Folder url',
   })
-  size1080x1800: string;
-
-  @AllowNull(true)
-  @Column({
-    type: DataType.STRING,
-    comment: 'Store',
-  })
-  size450x270: string;
+  folder: string;
 
   @CreatedAt
   @Column

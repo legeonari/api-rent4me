@@ -21,9 +21,6 @@ import { VehiclesOptionsIten } from 'src/vehicles_options_itens/entities/vehicle
 @Table({
   modelName: 'vehicles_itens',
 })
-@DefaultScope(() => ({
-  attributes: ['vehicleOptionItemId', 'vehicleId'],
-}))
 export class VehiclesItem extends Model<VehiclesItem> {
   @PrimaryKey
   @Default(DataType.UUIDV4)

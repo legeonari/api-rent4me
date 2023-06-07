@@ -67,7 +67,7 @@ export class VehiclesService {
           },
           {
             model: FilesImage,
-            attributes: ['size65x65', 'size450x270', 'size450x300'],
+            attributes: ['image', 'baseUrl', 'folder'],
           },
           {
             model: Offer,
@@ -106,11 +106,11 @@ export class VehiclesService {
         },
         {
           model: FilesImage,
-          attributes: ['size450x270', 'size450x300'],
+          attributes: ['image', 'baseUrl', 'folder'],
         },
         {
           model: FilesImage,
-          attributes: ['size450x270', 'size450x300'],
+          attributes: ['image', 'baseUrl', 'folder'],
         },
         {
           model: OfferDetail,
@@ -151,7 +151,7 @@ export class VehiclesService {
         },
         {
           model: FilesImage,
-          attributes: ['size450x270', 'size450x300'],
+          attributes: ['image', 'baseUrl', 'folder'],
         },
       ],
       attributes: ['route', 'name', 'thumb', 'subtitle'],
@@ -198,7 +198,7 @@ export class VehiclesService {
           },
           {
             model: FilesImage,
-            attributes: ['size65x65', 'size450x270', 'size450x300'],
+            attributes: ['image', 'baseUrl', 'folder'],
           },
         ],
         where,
@@ -234,7 +234,7 @@ export class VehiclesService {
             include: [
               {
                 model: FilesImage,
-                attributes: ['original', 'size450x270', 'size450x300'],
+                attributes: ['image', 'baseUrl', 'folder'],
               },
             ],
           },
@@ -244,12 +244,7 @@ export class VehiclesService {
             include: [
               {
                 model: FilesImage,
-                attributes: [
-                  'original',
-                  'size65x65',
-                  'size450x270',
-                  'size450x300',
-                ],
+                attributes: ['image', 'baseUrl', 'folder'],
               },
               {
                 model: VehiclesStoresContent,
@@ -257,7 +252,7 @@ export class VehiclesService {
                 include: [
                   {
                     model: FilesImage,
-                    attributes: ['size1080x1800'],
+                    attributes: ['image', 'baseUrl', 'folder'],
                   },
                 ],
               },
@@ -279,7 +274,7 @@ export class VehiclesService {
           },
           {
             model: FilesImage,
-            attributes: ['size65x65', 'size450x270', 'size450x300'],
+            attributes: ['image', 'baseUrl', 'folder'],
           },
         ],
         where: {

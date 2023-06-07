@@ -22,7 +22,14 @@ import { FilesImage } from 'src/files_images/entities/files_image.entity';
   modelName: 'vehicles_stores_contents',
 })
 @DefaultScope(() => ({
-  attributes: ['vehicleStoresId', 'title', 'description', 'file', 'status'],
+  attributes: [
+    'id',
+    'vehicleStoresId',
+    'title',
+    'description',
+    'file',
+    'status',
+  ],
 }))
 export class VehiclesStoresContent extends Model<VehiclesStoresContent> {
   @PrimaryKey

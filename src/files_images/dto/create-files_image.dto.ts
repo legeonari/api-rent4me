@@ -20,34 +20,34 @@ export class CreateFilesImageDto {
   format: string;
 
   @ApiProperty({
-    description: 'Image size 65x65',
+    description: 'Image',
     example: 'URL',
     type: String,
   })
   @IsOptional()
-  size65x65: string;
+  image: string;
 
   @ApiProperty({
-    description: 'Image size 450x300',
+    description: 'name image',
     example: 'URL',
     type: String,
   })
   @IsOptional()
-  size450x300: string;
+  name: string;
 
   @ApiProperty({
-    description: 'Image size 1080x1800',
+    description: 'Base url image',
     example: 'URL',
     type: String,
   })
   @IsOptional()
-  size1080x1800: string;
+  baseUrl: string;
 
   @ApiProperty({
-    description: 'Image size 450x270',
+    description: 'Folder url image',
     example: 'URL',
     type: String,
   })
   @IsOptional()
-  size450x270: string;
+  folder: string;
 }
