@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/sequelize';
 
 //Dtos
 import { CreateVehiclesOptionsItenDto } from './dto/create-vehicles_options_iten.dto';
-import { UpdateVehiclesOptionsItenDto } from './dto/update-vehicles_options_iten.dto';
 
 //Entity
 import { VehiclesOptionsIten } from './entities/vehicles_options_item.entity';

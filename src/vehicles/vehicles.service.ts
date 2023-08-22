@@ -147,11 +147,20 @@ export class VehiclesService {
         },
         {
           model: VehiclesMotor,
-          attributes: ['motorization'],
+          attributes: ['motorization', 'gearshift'],
         },
         {
           model: FilesImage,
           attributes: ['image', 'baseUrl', 'folder'],
+        },
+        {
+          model: OfferDetail,
+          order: [['price', 'ASC']],
+          attributes: ['period', 'mileage', 'price'],
+          limit: 1,
+          where: {
+            status: true,
+          },
         },
       ],
       attributes: ['route', 'name', 'thumb', 'subtitle'],
@@ -230,7 +239,7 @@ export class VehiclesService {
         include: [
           {
             model: VehiclesGallery,
-            attributes: ['title', 'description', 'file'],
+            attributes: ['id', 'title', 'description', 'file'],
             include: [
               {
                 model: FilesImage,
@@ -264,7 +273,7 @@ export class VehiclesService {
           },
           {
             model: VehiclesBrand,
-            attributes: ['name'],
+            attributes: ['id', 'name'],
           },
           {
             model: VehiclesDimension,
@@ -286,8 +295,12 @@ export class VehiclesService {
     }
   }
 
-  update(id: number, updateVehicleDto: UpdateVehicleDto) {
-    return `This action updates a #${id} vehicle`;
+  async update(id: string, updateVehicleDto: UpdateVehicleDto) {
+    try {
+      console.log('\n\n\n UPDATE', updateVehicleDto.galleries);
+    } catch (e) {
+      return e;
+    }
   }
 
   remove(id: number) {

@@ -4,6 +4,15 @@ import { IsString, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreateVehiclesGalleryDto {
   @ApiProperty({
+    description: 'Id Vehicle',
+    example: 'c3da61e1-2855-4bb1-9ed1-94d563a319a3',
+    type: String,
+  })
+  @IsOptional()
+  @IsString()
+  id: string;
+
+  @ApiProperty({
     description: 'Title',
     example: 'Tiggo 5x frente',
     type: String,

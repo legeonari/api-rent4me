@@ -106,7 +106,7 @@ export class Vehicle extends Model<Vehicle> {
   @BeforeCreate
   @BeforeUpdate
   static addRoute(instance: Vehicle) {
-    instance.route = instance.name
+    instance.route = `${instance.name}-${instance.subtitle}-por-assinaura`
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/([^\w]+|\s+)/g, '-')

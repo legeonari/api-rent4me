@@ -20,7 +20,7 @@ import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RoleGuard } from 'src/guards/roles.guards';
 
 @ApiTags('Vehicle Options itens')
-@ApiBearerAuth('Bearer')
+// @ApiBearerAuth('Bearer')
 @Controller('vehicles-options-itens')
 export class VehiclesOptionsItensController {
   constructor(

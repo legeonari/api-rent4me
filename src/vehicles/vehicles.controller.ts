@@ -39,8 +39,8 @@ export class VehiclesController {
   constructor(private readonly vehiclesService: VehiclesService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles('admin')
+  // @UseGuards(JwtAuthGuard, RoleGuard)
+  // @Roles('admin')
   @ApiOperation({
     summary: 'Create vehicle',
     description: 'Create new vehicle',
@@ -121,7 +121,7 @@ export class VehiclesController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateVehicleDto: UpdateVehicleDto) {
-    return this.vehiclesService.update(+id, updateVehicleDto);
+    return this.vehiclesService.update(id, updateVehicleDto);
   }
 
   @Delete(':id')
