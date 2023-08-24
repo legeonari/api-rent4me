@@ -2,6 +2,10 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 
+//Moment
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
+
 //DTO
 import { CreateUserLeadDto } from 'src/users/dto/create-user-lead.dto';
 
@@ -16,7 +20,7 @@ export class RdStationService {
           `${process.env.RD_API_BASEURL}/deals?token=${process.env.RD_TOKEN}`,
           {
             deal: {
-              deal_stage_id: '632f13e2c0828600286c6fbd',
+              deal_stage_id: process.env.RD_DEAL_ID,
               name: user.name,
               rating: 1,
             },
@@ -35,6 +39,9 @@ export class RdStationService {
                 title: user.name,
               },
             ],
+            deal_source: {
+              _id: '632f13e2c0828600286c6fb1',
+            },
           },
           {
             headers: {
