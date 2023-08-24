@@ -18,6 +18,7 @@ import { UmblerTalkWhatsappService } from 'src/umbler_talk_whatsapp/umbler_talk_
 import { UsersSentMessagesWhatsappService } from 'src/users-sent-messages-whatsapp/users-sent-messages-whatsapp.service';
 import { UsersInterestService } from 'src/users-interest/users-interest.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { RdStationService } from 'src/rd-station/rd-station.service';
 
 @Injectable()
 export class UsersService {
@@ -27,6 +28,9 @@ export class UsersService {
 
     @Inject(forwardRef(() => UmblerTalkWhatsappService))
     private readonly umblerTalkWhatsappService: UmblerTalkWhatsappService,
+
+    @Inject(forwardRef(() => RdStationService))
+    private readonly RdStationService: RdStationService,
 
     @Inject(forwardRef(() => UsersSentMessagesWhatsappService))
     private readonly usersSentMessagesWhatsappService: UsersSentMessagesWhatsappService,
@@ -72,6 +76,11 @@ export class UsersService {
       const utalkUser = await this.umblerTalkWhatsappService.createContact(
         user,
       );
+
+      const savedRd = await this.RdStationService.createContact({
+        ...createUserLeadDto,
+        interest: createUserLeadDto.interest,
+      });
 
       // Update ID Utalk in User
       utalkUser &&

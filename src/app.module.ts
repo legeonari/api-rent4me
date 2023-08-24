@@ -42,6 +42,7 @@ import { VehiclesGalleryModule } from './vehicles_gallery/vehicles_gallery.modul
 import { VehiclesBrandModule } from './vehicles_brand/vehicles_brand.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { FilesImagesModule } from './files_images/files_images.module';
+import { RdStationModule } from './rd-station/rd-station.module';
 
 @Module({
   imports: [
@@ -92,6 +93,7 @@ import { FilesImagesModule } from './files_images/files_images.module';
     VehiclesBrandModule,
     CloudinaryModule,
     FilesImagesModule,
+    RdStationModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtStrategy],

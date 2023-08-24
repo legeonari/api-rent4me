@@ -20,25 +20,9 @@ export class UsersInterestService {
 
     @Inject(forwardRef(() => UsersSentMessagesWhatsappService))
     private readonly usersSentMessagesWhatsappService: UsersSentMessagesWhatsappService,
-  ){}
+  ) {}
 
   async create(createUserInterestLeadDto: [CreateUserInterestLeadDto]) {
     return this.UsersInterestModel.bulkCreate(createUserInterestLeadDto);
-  }
-
-  findAll() {
-    return `This action returns all usersInterest`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} usersInterest`;
-  }
-
-  update(id: number, updateUsersInterestDto: UpdateUsersInterestDto) {
-    return `This action updates a #${id} usersInterest`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} usersInterest`;
   }
 }

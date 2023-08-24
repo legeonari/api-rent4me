@@ -15,7 +15,7 @@ import { UsersInterest } from './entities/users-interest.entity';
 @Module({
   imports: [
     SequelizeModule.forFeature([UsersInterest]),
-    UsersSentMessagesWhatsappModule
+    UsersSentMessagesWhatsappModule,
   ],
   controllers: [UsersInterestController],
   providers: [UsersInterestService],

@@ -12,10 +12,7 @@ import { UmblerTalkWhatsappService } from './umbler_talk_whatsapp.service';
 import { UmblerTalkSendMessageListener } from './listener/users-interest-created.listener';
 
 @Module({
-  imports: [
-    HttpModule,
-    forwardRef( () => UsersSentMessagesWhatsappModule)
-  ],
+  imports: [HttpModule, forwardRef(() => UsersSentMessagesWhatsappModule)],
   providers: [UmblerTalkWhatsappService, UmblerTalkSendMessageListener],
   exports: [UmblerTalkWhatsappService],
 })

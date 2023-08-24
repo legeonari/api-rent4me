@@ -21,47 +21,61 @@ export class UsersSentMessagesWhatsappService {
     @Inject(forwardRef(() => UmblerTalkWhatsappService))
     private readonly umblerTalkWhatsappService: UmblerTalkWhatsappService,
 
-    private eventEmitter: EventEmitter2
+    private eventEmitter: EventEmitter2,
   ) {}
 
-  create(createUsersSentMessagesWhatsappDto: CreateUsersSentMessagesWhatsappDto) {
-    return this.UsersSentMessagesWhatsappModel.create(createUsersSentMessagesWhatsappDto);
+  create(
+    createUsersSentMessagesWhatsappDto: CreateUsersSentMessagesWhatsappDto,
+  ) {
+    return this.UsersSentMessagesWhatsappModel.create(
+      createUsersSentMessagesWhatsappDto,
+    );
   }
 
   async sendMessages({ params }: { params: Array<string | null> }) {
     console.log('--------- Iniciando mensagens ---------');
     const listMessages = await this.UsersSentMessagesWhatsappModel.findAll({
-      attributes: ['id', 'userId', 'template', 'idContactUtalk', 'message', 'note', 'status'],
+      attributes: [
+        'id',
+        'userId',
+        'template',
+        'idContactUtalk',
+        'message',
+        'note',
+        'status',
+      ],
       where: {
-        status: false
+        status: false,
       },
-      raw: true
+      raw: true,
     });
 
+    listMessages.length &&
+      listMessages.map(async (item) => {
+        this.umblerTalkWhatsappService.AddNotes({
+          note: item.note,
+          idContactUtalk: item.idContactUtalk,
+        });
 
-    listMessages.length && listMessages.map( async(item) => {
-      this.umblerTalkWhatsappService.AddNotes({
-        note: item.note,
-        idContactUtalk: item.idContactUtalk
-      })
+        const send = await this.umblerTalkWhatsappService.SendMessage({
+          message: item.message,
+          idContactUtalk: item.idContactUtalk,
+          template: item.template,
+          params: params,
+        });
 
-      const send = await this.umblerTalkWhatsappService.SendMessage({
-        message: item.message,
-        idContactUtalk: item.idContactUtalk,
-        template: item.template,
-        params: params
+        !!send &&
+          this.UsersSentMessagesWhatsappModel.update(
+            {
+              status: true,
+            },
+            {
+              where: {
+                id: item.id,
+              },
+            },
+          );
       });
-
-      !!send && this.UsersSentMessagesWhatsappModel.update(
-        {
-          status: true
-        }, {
-          where: {
-            id: item.id,
-          }
-        }
-      )
-    });
     console.log('--------- Finalizando mensagens ---------');
   }
 }
