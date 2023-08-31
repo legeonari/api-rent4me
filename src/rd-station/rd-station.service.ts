@@ -14,6 +14,7 @@ export class RdStationService {
   constructor(private httpService: HttpService) {}
 
   async createContact(user: CreateUserLeadDto) {
+    console.log('--- Send Lead - RD --- ');
     const createContact: { data: { contact: { id: string } } } =
       await this.httpService
         .post(
@@ -39,9 +40,6 @@ export class RdStationService {
                 title: user.name,
               },
             ],
-            deal_source: {
-              _id: '632f13e2c0828600286c6fb1',
-            },
           },
           {
             headers: {
