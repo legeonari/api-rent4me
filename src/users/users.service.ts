@@ -77,7 +77,7 @@ export class UsersService {
         user,
       );
 
-      const savedRd = await this.RdStationService.createContact({
+      this.RdStationService.createContact({
         ...createUserLeadDto,
         interest: createUserLeadDto.interest,
       });
