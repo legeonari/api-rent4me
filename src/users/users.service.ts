@@ -104,10 +104,10 @@ export class UsersService {
         idContactUtalk: utalkUser.contact.id,
         message: `Olá, ${
           user.name.split(' ') ? user.name.split(' ')[0] : user.name
-        } 👋!\r\n\r\nVi que você demonstrou interesse no ${
-          vehicle[0].name
+        } 👋!\r\n\r\nVi que você demonstrou interesse no ${vehicle[0].name} ${
+          vehicle[0].subtitle
         } em nosso site. É um excelente carro e tenho certeza de que irá adorá-lo.\r\n\r\nGostaria de lembrá-lo de que, com o carro por assinatura, você terá algumas vantagens exclusivas, como o IPVA pago, seguro incluso e zero risco de depreciação do seu bem. 🥰\r\n\r\nPara darmos continuidade ao processo, basta me informar se prefere que eu ligue para você agora mesmo ou se prefere agendar um horário mais conveniente. Também podemos seguir conversando via Whatsapp.`,
-        note: `Usuário demonstrou interesse ${vehicle[0].name}. \nPeriodo: ${vehicle[0].period} meses \nKm's ${vehicle[0].mileage}km`,
+        note: `Usuário demonstrou interesse ${vehicle[0].name} ${vehicle[0].subtitle}. \nPeriodo: ${vehicle[0].period} meses \nKm's ${vehicle[0].mileage}km`,
         template: 'ZCGc4wYjTYYCd8uC',
       });
 
