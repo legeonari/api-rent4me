@@ -88,4 +88,8 @@ export class UmblerTalkWhatsappService {
 
     return chat?.data;
   }
+
+  async Webhook(params: any) {
+    console.log('\n\n\n', params);
+  }
 }

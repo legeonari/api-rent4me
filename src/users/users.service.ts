@@ -99,6 +99,8 @@ export class UsersService {
         (offer) => offer.type == 'solicitation',
       );
 
+      console.log('oi', vehicle[0]);
+
       await this.usersSentMessagesWhatsappService.create({
         userId: user.id,
         idContactUtalk: utalkUser.contact.id,
