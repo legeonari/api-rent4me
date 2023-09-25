@@ -90,6 +90,8 @@ export class UmblerTalkWhatsappService {
   }
 
   async Webhook(params: any) {
+    console.log('-----');
     console.log('\n\n\n', params);
+    console.log(JSON.stringify(params));
   }
 }

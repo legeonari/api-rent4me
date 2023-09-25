@@ -11,7 +11,7 @@ import { UmblerTalkWhatsappService } from './umbler_talk_whatsapp.service';
 @Controller('umbler')
 export class UmblerTalkWhatsappController {
   constructor(
-    private readonly umblerTalkWhatsappService: UmblerTalkWhatsappService
+    private readonly umblerTalkWhatsappService: UmblerTalkWhatsappService,
   ) {}
 
   @Post('webhook')
