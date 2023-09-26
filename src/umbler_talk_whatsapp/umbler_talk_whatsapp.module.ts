@@ -12,8 +12,15 @@ import { UmblerTalkWhatsappService } from './umbler_talk_whatsapp.service';
 import { UmblerTalkSendMessageListener } from './listener/users-interest-created.listener';
 import { UmblerTalkWhatsappController } from './umbler_talk_whatsapp.controller';
 
+//Modules
+import { UsersModule } from 'src/users/users.module';
+
 @Module({
-  imports: [HttpModule, forwardRef(() => UsersSentMessagesWhatsappModule)],
+  imports: [
+    HttpModule,
+    forwardRef(() => UsersSentMessagesWhatsappModule),
+    forwardRef(() => UsersModule),
+  ],
   providers: [UmblerTalkWhatsappService, UmblerTalkSendMessageListener],
   exports: [UmblerTalkWhatsappService],
   controllers: [UmblerTalkWhatsappController],

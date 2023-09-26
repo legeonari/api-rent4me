@@ -2,7 +2,6 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 
-
 //Services
 import { UsersSentMessagesWhatsappService } from './users-sent-messages-whatsapp.service';
 
@@ -16,7 +15,7 @@ import { UmblerTalkWhatsappModule } from 'src/umbler_talk_whatsapp/umbler_talk_w
 @Module({
   imports: [
     SequelizeModule.forFeature([UsersSentMessagesWhatsapp]),
-    UmblerTalkWhatsappModule
+    UmblerTalkWhatsappModule,
   ],
   controllers: [UsersSentMessagesWhatsappController],
   providers: [UsersSentMessagesWhatsappService],

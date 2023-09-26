@@ -1,6 +1,12 @@
 //Dependencies
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional, IsNumber } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsNumber,
+  IsEnum,
+} from 'class-validator';
 
 //Dto
 import { CreateUserInterestLeadDto } from 'src/users-interest/dto/create-user-interest-lead.dto';
@@ -22,7 +28,7 @@ export class CreateUserLeadDto {
   })
   @IsString()
   @IsOptional()
-  email: string;
+  email?: string;
 
   @ApiProperty({
     description: 'ID Contact Umbler',
@@ -40,7 +46,16 @@ export class CreateUserLeadDto {
   })
   @IsString()
   @IsOptional()
-  thumb: string;
+  thumb?: string;
+
+  @ApiProperty({
+    description: 'Origin',
+    example: 'site',
+    type: String,
+  })
+  @IsEnum(['site', 'umbler', 'other'])
+  @IsOptional()
+  origin: string;
 
   @ApiProperty({
     description: 'Phone',
@@ -56,6 +71,6 @@ export class CreateUserLeadDto {
     type: [CreateUserInterestLeadDto],
   })
   @IsNumber()
-  @IsNotEmpty()
-  interest;
+  @IsOptional()
+  interest?;
 }

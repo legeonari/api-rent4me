@@ -99,8 +99,6 @@ export class UsersService {
         (offer) => offer.type == 'solicitation',
       );
 
-      console.log('oi', vehicle[0]);
-
       await this.usersSentMessagesWhatsappService.create({
         userId: user.id,
         idContactUtalk: utalkUser.contact.id,
@@ -205,5 +203,31 @@ export class UsersService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async checkUserWebhookUmbler(user: CreateUserLeadDto) {
+    try {
+      const contact = await this.UsersModel.findOne({
+        where: {
+          idContactUtalk: user.idContactUtalk,
+        },
+        attributes: ['id'],
+      });
+
+      if (!!contact) return false;
+
+      // Created user in system
+      await this.UsersModel.create({
+        ...user,
+        userLevelId: process.env.USER_ID_LEAD,
+      });
+
+      //Add in RD
+      this.RdStationService.createContact({
+        ...user,
+      });
+    } catch (e) {
+      console.log('Error valideUserUmbler', e);
+    }
   }
 }
