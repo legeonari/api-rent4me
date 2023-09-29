@@ -203,6 +203,7 @@ export class UsersService {
         where: {
           idContactUtalk: idContactUtalk,
         },
+        attributes: ['id'],
       });
     } catch (e) {
       return e;

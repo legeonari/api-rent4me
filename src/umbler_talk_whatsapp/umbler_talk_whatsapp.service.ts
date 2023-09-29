@@ -119,6 +119,11 @@ export class UmblerTalkWhatsappService {
             : params.Payload.Content.Contact.ProfilePictureUrl,
           origin: 'umbler',
         });
+
+        //Change status tags
+        this.usersTagsService.eventIntegration({
+          user: params.Payload.Content.Contact,
+        });
         break;
       case 'ChatPrivateStatusChanged':
         console.log('---- Status do chat alterado. ----');
