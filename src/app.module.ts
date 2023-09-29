@@ -43,6 +43,8 @@ import { VehiclesBrandModule } from './vehicles_brand/vehicles_brand.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { FilesImagesModule } from './files_images/files_images.module';
 import { RdStationModule } from './rd-station/rd-station.module';
+import { UsersTagsModule } from './users-tags/users-tags.module';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
@@ -94,6 +96,8 @@ import { RdStationModule } from './rd-station/rd-station.module';
     CloudinaryModule,
     FilesImagesModule,
     RdStationModule,
+    UsersTagsModule,
+    TagsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, JwtStrategy],

@@ -197,6 +197,18 @@ export class UsersService {
     }
   }
 
+  findOneByIdContact(idContactUtalk: string) {
+    try {
+      return this.UsersModel.findOne({
+        where: {
+          idContactUtalk: idContactUtalk,
+        },
+      });
+    } catch (e) {
+      return e;
+    }
+  }
+
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }

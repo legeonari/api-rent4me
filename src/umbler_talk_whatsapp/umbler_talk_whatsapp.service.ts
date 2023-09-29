@@ -15,7 +15,10 @@ import {
   UTalkNotesCreated,
   UTalkMessageCreated,
 } from './umbler_talk_whatsapp.types';
+
+//Services
 import { UsersService } from 'src/users/users.service';
+import { UsersTagsService } from 'src/users-tags/users-tags.service';
 
 @Injectable()
 export class UmblerTalkWhatsappService {
@@ -24,6 +27,9 @@ export class UmblerTalkWhatsappService {
 
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
+
+    @Inject(forwardRef(() => UsersTagsService))
+    private readonly usersTagsService: UsersTagsService,
   ) {}
 
   async createContact(user: CreateUserLeadDto) {
@@ -116,6 +122,9 @@ export class UmblerTalkWhatsappService {
         break;
       case 'ChatPrivateStatusChanged':
         console.log('---- Status do chat alterado. ----');
+        this.usersTagsService.eventIntegration({
+          user: params.Payload.Content.Contact,
+        });
         break;
       case 'ChatClosed':
         console.log('---- Chat fechado. ----');

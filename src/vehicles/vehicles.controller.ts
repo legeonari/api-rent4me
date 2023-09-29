@@ -25,12 +25,12 @@ import { VehiclesService } from './vehicles.service';
 //Dtos
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
+import { FilterVehicleDto } from './dto/filter-vehicle.dto';
 
 //Guards
 import { Roles } from 'src/guards/roles.decorator';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RoleGuard } from 'src/guards/roles.guards';
-import { FilterVehicleDto } from './dto/filter-vehicle.dto';
 
 @ApiTags('Vehicles')
 @ApiBearerAuth('Bearer')
