@@ -1,6 +1,7 @@
 //Dependencies
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Cron } from '@nestjs/schedule';
 
 //Serives
 import { UmblerTalkWhatsappService } from './umbler_talk_whatsapp.service';

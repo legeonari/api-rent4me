@@ -10,7 +10,9 @@ import {
   CreatedAt,
   UpdatedAt,
   DeletedAt,
+  HasMany,
 } from 'sequelize-typescript';
+import { UsersTags } from 'src/users-tags/entities/users-tags.entity';
 
 @Table({
   modelName: 'tags',
@@ -51,6 +53,10 @@ export class Tag extends Model<Tag> {
     comment: 'ID TAG Integrations',
   })
   idTagExternal: string;
+
+  //Foreign
+  @HasMany(() => UsersTags, 'tagsId')
+  users;
 
   @CreatedAt
   @Column

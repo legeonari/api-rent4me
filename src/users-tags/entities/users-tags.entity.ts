@@ -41,7 +41,7 @@ export class UsersTags extends Model<UsersTags> {
   @AllowNull(false)
   @Column({
     type: DataType.UUID,
-    comment: 'User ID',
+    comment: 'Tag ID',
   })
   tagsId: string;
 

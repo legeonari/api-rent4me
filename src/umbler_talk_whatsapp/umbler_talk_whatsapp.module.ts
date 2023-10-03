@@ -1,5 +1,6 @@
 //Dependencies
 import { HttpModule } from '@nestjs/axios';
+import { ScheduleModule } from '@nestjs/schedule';
 
 //Modules
 import { Module, forwardRef } from '@nestjs/common';
@@ -18,6 +19,7 @@ import { UmblerTalkWhatsappController } from './umbler_talk_whatsapp.controller'
 
 @Module({
   imports: [
+    ScheduleModule,
     HttpModule,
     UsersTagsModule,
     forwardRef(() => UsersSentMessagesWhatsappModule),

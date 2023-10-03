@@ -6,7 +6,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 
 //Guards
 import { Roles } from 'src/guards/roles.decorator';
@@ -37,6 +37,17 @@ export class TagsController {
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   create(@Body() createTagDto: [CreateTagDto]) {
     return this.tagsService.create(createTagDto);
+  }
+
+  @Get('/dash-users')
+  // @UseGuards(JwtAuthGuard, RoleGuard)
+  // @Roles('admin')
+  @ApiOperation({
+    summary: 'Get dash users status',
+    description: 'List count to dash status users',
+  })
+  findAll() {
+    return this.tagsService.getDashUsers();
   }
 
   // @Get()

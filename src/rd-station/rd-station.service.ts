@@ -15,6 +15,9 @@ export class RdStationService {
 
   async createContact(user: CreateUserLeadDto) {
     console.log('--- Send Lead - RD --- ');
+    //Not created card is not prod
+    if (process.env.MODE != 'prod') return;
+
     const createContact: { data: { contact: { id: string } } } =
       await this.httpService
         .post(

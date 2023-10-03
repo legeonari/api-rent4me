@@ -6,13 +6,18 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 
 //Services
 import { UsersTagsService } from './users-tags.service';
 
 //Dto
 import { IntegrationUsersStatusDto } from './dto/integration-users-tags.dto';
+
+//Guard
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { RoleGuard } from 'src/guards/roles.guards';
+import { Roles } from 'src/guards/roles.decorator';
 
 @ApiTags('Users Tags and Status')
 @ApiBearerAuth('Bearer')
@@ -21,8 +26,8 @@ export class UsersTagsController {
   constructor(private readonly UsersTagsService: UsersTagsService) {}
 
   @Post()
-  // @UseGuards(JwtAuthGuard, RoleGuard)
-  // @Roles('admin')
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles('admin')
   @ApiOperation({
     summary: 'Integration Status user to Umbler',
     description: 'Integration Status user to Umbler',
@@ -32,11 +37,6 @@ export class UsersTagsController {
   eventIntegration(@Body() integrationUsersStatus: IntegrationUsersStatusDto) {
     return this.UsersTagsService.eventIntegration(integrationUsersStatus);
   }
-
-  // @Get()
-  // findAll() {
-  //   return this.UsersTagsService.findAll();
-  // }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {

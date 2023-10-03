@@ -1,6 +1,7 @@
 //Dependencies
 import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 
 //Moment
 import * as moment from 'moment';
@@ -102,10 +103,24 @@ export class UmblerTalkWhatsappService {
     return chat?.data;
   }
 
+  async GetChats(ChatState: string) {
+    const chat = await this.httpService
+      .get(
+        `${process.env.UMBLER_API}/chats?organizationId=${process.env.UBMLER_ORGANIZATION}&ChatState=${ChatState}&Order=Desc&Skip=0&Take=30&Behavior=GetSliceOnly`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.UMBLER_TOKEN}`,
+          },
+        },
+      )
+      .toPromise();
+
+    return chat?.data;
+  }
+
   async Webhook(params: WebhookDto) {
     console.log('-----');
-    console.log('\n\n\n', params);
-    console.log(JSON.stringify(params));
 
     switch (params.Type) {
       case 'Message':
@@ -120,10 +135,6 @@ export class UmblerTalkWhatsappService {
           origin: 'umbler',
         });
 
-        //Change status tags
-        this.usersTagsService.eventIntegration({
-          user: params.Payload.Content.Contact,
-        });
         break;
       case 'ChatPrivateStatusChanged':
         console.log('---- Status do chat alterado. ----');
@@ -133,6 +144,9 @@ export class UmblerTalkWhatsappService {
         break;
       case 'ChatClosed':
         console.log('---- Chat fechado. ----');
+        this.usersTagsService.eventIntegration({
+          user: params.Payload.Content.Contact,
+        });
         break;
       case 'MemberTransfer':
         console.log('---- Membro transferido. ----');
@@ -142,8 +156,45 @@ export class UmblerTalkWhatsappService {
         break;
       default:
         console.log('---- Ação não reconhecida. ----');
-
         break;
+    }
+  }
+
+  @Cron('*/15 * * * *')
+  async handleCronContactsOpenCard() {
+    await this.HandleCronContacts('Open');
+  }
+
+  @Cron('*/25 * * * *')
+  async handleCronContactsClosedCard() {
+    await this.HandleCronContacts('Closed');
+  }
+
+  async HandleCronContacts(_ChatState: string) {
+    try {
+      console.log(
+        `---- \n\n Rodando Cron de integração de Tags.  \n Type ${_ChatState} \n\n----`,
+      );
+      const list = await this.GetChats(_ChatState);
+      list.items.map((contact) => {
+        this.usersTagsService.eventIntegration({
+          user: {
+            Id: contact.contact.id,
+            Tags: contact.contact.tags.map((tag) => ({ ...tag, Id: tag.id })),
+            IsBlocked: contact.contact.isBlocked,
+            IsOptIn: contact.contact.isOptIn,
+            LastActiveUTC: contact.contact.lastActiveUTC,
+            Name: contact.contact.name,
+            PhoneNumber: contact.contact.phoneNumber,
+            ScheduledMessages: contact.contact.scheduledMessages,
+            ProfilePictureUrl: !contact.contact.profilePictureUrl
+              ? null
+              : contact.contact.profilePictureUrl,
+          },
+        });
+      });
+    } catch (e) {
+      console.log('Erro Cron HandleCronContacts', e);
     }
   }
 }
