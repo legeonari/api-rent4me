@@ -136,27 +136,6 @@ export class UmblerTalkWhatsappService {
         });
 
         break;
-      case 'ChatPrivateStatusChanged':
-        console.log('---- Status do chat alterado. ----');
-        this.usersTagsService.eventIntegration({
-          user: params.Payload.Content.Contact,
-        });
-        break;
-      case 'ChatClosed':
-        console.log('---- Chat fechado. ----');
-        this.usersTagsService.eventIntegration({
-          user: params.Payload.Content.Contact,
-        });
-        break;
-      case 'MemberTransfer':
-        console.log('---- Membro transferido. ----');
-        break;
-      case 'ChatSectorChanged':
-        console.log('---- Setor do chat alterado. ----');
-        break;
-      default:
-        console.log('---- Ação não reconhecida. ----');
-        break;
     }
   }
 
