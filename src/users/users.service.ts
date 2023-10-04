@@ -229,7 +229,7 @@ export class UsersService {
 
       this.umblerTalkWhatsappService.AddTagInContact(
         user.idContactUtalk,
-        'ZRc21WtSzyaJlsU',
+        'ZRc21WtSzyaJlsU2',
       );
 
       if (!!contact) return false;

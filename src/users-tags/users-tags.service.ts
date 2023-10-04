@@ -122,7 +122,7 @@ export class UsersTagsService {
   private async updateStatus(open, tags) {
     const inProgressStatus = {
       name: 'Em atendimento',
-      id: 'ZRc21WtSzyaJlsU',
+      id: 'ZRc21WtSzyaJlsU2',
     };
 
     const closedStatus = {

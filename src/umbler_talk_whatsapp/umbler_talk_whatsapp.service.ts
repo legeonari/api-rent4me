@@ -168,12 +168,13 @@ export class UmblerTalkWhatsappService {
             : params.Payload.Content.Contact.ProfilePictureUrl,
           origin: 'umbler',
         });
+        this.RemoveTagInContact(params.Payload.Content.Id, 'ZRrO2a9ocCUjYgdI');
 
         break;
       case 'ChatClosed':
         console.log('\n\n\n- ChatClosed');
         this.AddTagInContact(params.Payload.Content.Id, 'ZRrO2a9ocCUjYgdI');
-        this.RemoveTagInContact(params.Payload.Content.Id, 'ZRc21WtSzyaJlsU');
+        this.RemoveTagInContact(params.Payload.Content.Id, 'ZRc21WtSzyaJlsU2');
         break;
     }
   }
