@@ -31,12 +31,10 @@ export class UsersTagsService {
   async eventIntegration(integrationUsersStatus: IntegrationUsersStatusDto) {
     try {
       if (!integrationUsersStatus.user.Tags) return;
+      let tagsFix = integrationUsersStatus.user.Tags;
+      tagsFix = await this.updateStatus(true, integrationUsersStatus.user.Tags);
 
-      const idsString = integrationUsersStatus.user.Tags.map(
-        (tag) => tag.Id,
-      ).join(',');
-
-      console.log('idsString', idsString);
+      const idsString = tagsFix.map((tag) => tag.Id).join(',');
 
       if (!idsString.length) return;
 
@@ -49,7 +47,7 @@ export class UsersTagsService {
 
       if (!user) {
         //Add user if not exist
-        user = this.usersService.checkUserWebhookUmbler({
+        user = await this.usersService.checkUserWebhookUmbler({
           name: integrationUsersStatus.user.Name,
           phone: integrationUsersStatus.user.PhoneNumber,
           idContactUtalk: integrationUsersStatus.user.Id,
@@ -97,13 +95,6 @@ export class UsersTagsService {
   ) {
     try {
       const userTagsPromises = tags.map((tag) => {
-        console.log('\n\n\n', {
-          userId: userId,
-          tagsId: tag.id,
-          observation: 'Integração via API',
-          status: true,
-          updatedAt: moment(contact.user.LastActiveUTC).toDate(),
-        });
         this.userTagModel.findOrCreate({
           where: {
             userId: userId,
@@ -115,7 +106,9 @@ export class UsersTagsService {
             tagsId: tag.id,
             observation: 'Integração via API',
             status: true,
-            updatedAt: moment(contact.user.LastActiveUTC).toDate(),
+            createdAt: !!contact.closedAtUTC
+              ? moment(contact.closedAtUTC).toDate()
+              : null,
           },
         });
       });
@@ -124,5 +117,27 @@ export class UsersTagsService {
       console.error('ERROR createOrUpdateUserTags', e);
       throw e;
     }
+  }
+
+  private async updateStatus(open, tags) {
+    const inProgressStatus = {
+      name: 'Em atendimento',
+      id: 'ZRc21WtSzyaJlsU',
+    };
+
+    const closedStatus = {
+      name: 'Atendimento encerrado',
+      id: 'ZRrO2a9ocCUjYgdI',
+    };
+
+    if (open) {
+      tags = tags.filter((status) => status.id !== closedStatus.id);
+      tags.push(inProgressStatus);
+    } else {
+      tags = tags.filter((status) => status.id !== inProgressStatus.id);
+      tags.push(closedStatus);
+    }
+
+    return tags;
   }
 }

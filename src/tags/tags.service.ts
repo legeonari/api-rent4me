@@ -1,5 +1,5 @@
 //Dependencies
-import { Op, Sequelize } from 'sequelize';
+import * as moment from 'moment';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
@@ -9,7 +9,8 @@ import { CreateTagDto } from './dto/create-tag.dto';
 //Models
 import { Tag } from './entities/tag.entity';
 import { UsersTags } from 'src/users-tags/entities/users-tags.entity';
-import moment from 'moment';
+import { Users } from 'src/users/entities/user.entity';
+import { Op } from 'sequelize';
 
 @Injectable()
 export class TagsService {
@@ -43,25 +44,36 @@ export class TagsService {
 
   async getDashUsers() {
     try {
+      // Obtém o primeiro e o último dia do mês atual
+      const startOfMonth = moment().startOf('month').toDate();
+      const endOfMonth = moment().endOf('month').toDate();
+
       return this.TagsModel.findAll({
         where: {
           type: 'status',
         },
-        attributes: ['tag', 'id'],
+        attributes: ['tag', 'id', 'color'],
         include: [
           {
             model: UsersTags,
-            as: 'users',
-            attributes: [
-              [Sequelize.fn('COUNT', Sequelize.col('users.id')), 'totalUsers'],
-            ],
+            attributes: ['userId'],
             where: {
               status: true,
+              createdAt: {
+                [Op.between]: [startOfMonth, endOfMonth],
+              },
             },
             duplicating: false,
+            include: [
+              {
+                model: Users,
+                attributes: ['name', 'thumb', 'id', 'createdAt', 'origin'],
+                order: [['createdAt', 'ASC']],
+              },
+            ],
           },
         ],
-        group: ['Tags.id'],
+        order: [['order', 'ASC']],
       });
     } catch (e) {
       console.log('ERROR eventIntegration', e);

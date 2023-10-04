@@ -12,6 +12,8 @@ import {
   DeletedAt,
   HasMany,
 } from 'sequelize-typescript';
+
+//Models
 import { UsersTags } from 'src/users-tags/entities/users-tags.entity';
 
 @Table({
@@ -29,6 +31,14 @@ export class Tag extends Model<Tag> {
     comment: 'Tag',
   })
   tag: string;
+
+  @AllowNull(false)
+  @Column({
+    type: DataType.INTEGER,
+    comment: 'Order',
+    defaultValue: 0,
+  })
+  order: number;
 
   @AllowNull(false)
   @Column({

@@ -2,15 +2,16 @@
 import {
   Model,
   Table,
-  PrimaryKey,
   Column,
   DataType,
-  Default,
   AllowNull,
   BelongsTo,
   CreatedAt,
   UpdatedAt,
   DeletedAt,
+  HasOne,
+  PrimaryKey,
+  Default,
 } from 'sequelize-typescript';
 
 //Models
@@ -21,6 +22,11 @@ import { Tag } from 'src/tags/entities/tag.entity';
   modelName: 'users_tags',
 })
 export class UsersTags extends Model<UsersTags> {
+  @PrimaryKey
+  @Default(DataType.UUIDV4)
+  @Column(DataType.UUID)
+  id: string;
+
   @BelongsTo(() => Users, {
     foreignKey: 'userId',
     targetKey: 'id',

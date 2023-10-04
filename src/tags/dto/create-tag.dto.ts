@@ -13,6 +13,15 @@ export class CreateTagDto {
   tag: string;
 
   @ApiProperty({
+    description: 'Order',
+    example: '0',
+    type: Number,
+  })
+  @IsString()
+  @IsOptional()
+  order: number;
+
+  @ApiProperty({
     description: 'Color',
     example: '#f2f2f2',
     type: String,

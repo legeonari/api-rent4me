@@ -227,6 +227,11 @@ export class UsersService {
         attributes: ['id'],
       });
 
+      this.umblerTalkWhatsappService.AddTagInContact(
+        user.idContactUtalk,
+        'ZRc21WtSzyaJlsU',
+      );
+
       if (!!contact) return false;
 
       // Created user in system

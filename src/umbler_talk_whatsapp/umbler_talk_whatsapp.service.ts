@@ -103,10 +103,46 @@ export class UmblerTalkWhatsappService {
     return chat?.data;
   }
 
+  async AddTagInContact(contactId: string, tagId: string) {
+    const tag = await this.httpService
+      .post(
+        `${process.env.UMBLER_API}/contacts/${contactId}/tags/`,
+        {
+          tagId: `${tagId}`,
+          organizationId: process.env.UBMLER_ORGANIZATION,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.UMBLER_TOKEN}`,
+          },
+        },
+      )
+      .toPromise();
+
+    return tag?.data;
+  }
+
+  async RemoveTagInContact(contactId: string, tagId: string) {
+    const tag = await this.httpService
+      .delete(
+        `${process.env.UMBLER_API}/contacts/${contactId}/tags/?tagId=${tagId}&organizationId=${process.env.UBMLER_ORGANIZATION}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.UMBLER_TOKEN}`,
+          },
+        },
+      )
+      .toPromise();
+
+    return tag?.data;
+  }
+
   async GetChats(ChatState: string) {
     const chat = await this.httpService
       .get(
-        `${process.env.UMBLER_API}/chats?organizationId=${process.env.UBMLER_ORGANIZATION}&ChatState=${ChatState}&Order=Desc&Skip=0&Take=30&Behavior=GetSliceOnly`,
+        `${process.env.UMBLER_API}/chats?organizationId=${process.env.UBMLER_ORGANIZATION}&ChatState=${ChatState}&Order=Desc&Skip=0&Take=250&Behavior=GetSliceOnly`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -120,8 +156,6 @@ export class UmblerTalkWhatsappService {
   }
 
   async Webhook(params: WebhookDto) {
-    console.log('-----');
-
     switch (params.Type) {
       case 'Message':
         console.log('---- Ação relacionada à mensagem. ----');
@@ -136,16 +170,23 @@ export class UmblerTalkWhatsappService {
         });
 
         break;
+      case 'ChatClosed':
+        console.log('\n\n\n- ChatClosed');
+        this.AddTagInContact(params.Payload.Content.Id, 'ZRrO2a9ocCUjYgdI');
+        this.RemoveTagInContact(params.Payload.Content.Id, 'ZRc21WtSzyaJlsU');
+        break;
     }
   }
 
-  @Cron('*/15 * * * *')
+  @Cron('/17 * * * *')
   async handleCronContactsOpenCard() {
+    // if (process.env.mode != 'prod') return;
     await this.HandleCronContacts('Open');
   }
 
   @Cron('*/25 * * * *')
   async handleCronContactsClosedCard() {
+    // if (process.env.mode != 'prod') return;
     await this.HandleCronContacts('Closed');
   }
 
@@ -156,7 +197,7 @@ export class UmblerTalkWhatsappService {
       );
       const list = await this.GetChats(_ChatState);
       list.items.map((contact) => {
-        this.usersTagsService.eventIntegration({
+        return this.usersTagsService.eventIntegration({
           user: {
             Id: contact.contact.id,
             Tags: contact.contact.tags.map((tag) => ({ ...tag, Id: tag.id })),
@@ -170,6 +211,8 @@ export class UmblerTalkWhatsappService {
               ? null
               : contact.contact.profilePictureUrl,
           },
+          open: contact.open,
+          closedAtUTC: contact.closedAtUTC,
         });
       });
     } catch (e) {

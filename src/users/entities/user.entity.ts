@@ -24,6 +24,7 @@ import { UsersInterest } from 'src/users-interest/entities/users-interest.entity
 
 //Entitys
 import { UsersLevels } from 'src/users-levels/entities/users-level.entity';
+import { UsersTags } from 'src/users-tags/entities/users-tags.entity';
 
 @Table({
   modelName: 'users',
@@ -158,6 +159,9 @@ export class Users extends Model<Users> {
 
   @HasMany(() => UsersContract, 'userId')
   contract;
+
+  @HasMany(() => UsersTags, 'userId')
+  tags;
 
   @CreatedAt
   @Column
