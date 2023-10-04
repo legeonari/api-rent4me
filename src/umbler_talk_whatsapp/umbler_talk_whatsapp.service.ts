@@ -168,6 +168,7 @@ export class UmblerTalkWhatsappService {
             : params.Payload.Content.Contact.ProfilePictureUrl,
           origin: 'umbler',
         });
+        this.AddTagInContact(params.Payload.Content.Id, 'ZRc21WtSzyaJlsU2');
         this.RemoveTagInContact(params.Payload.Content.Id, 'ZRrO2a9ocCUjYgdI');
 
         break;
