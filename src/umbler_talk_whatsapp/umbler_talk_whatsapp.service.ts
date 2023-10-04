@@ -178,7 +178,7 @@ export class UmblerTalkWhatsappService {
     }
   }
 
-  @Cron('/17 * * * *')
+  @Cron('*/17 * * * *')
   async handleCronContactsOpenCard() {
     // if (process.env.mode != 'prod') return;
     await this.HandleCronContacts('Open');
