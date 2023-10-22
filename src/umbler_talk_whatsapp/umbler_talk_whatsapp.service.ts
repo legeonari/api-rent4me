@@ -173,22 +173,21 @@ export class UmblerTalkWhatsappService {
 
         break;
       case 'ChatClosed':
-        console.log('\n\n\n- ChatClosed');
         this.AddTagInContact(params.Payload.Content.Id, 'ZRrO2a9ocCUjYgdI');
         this.RemoveTagInContact(params.Payload.Content.Id, 'ZRc21WtSzyaJlsU2');
         break;
     }
   }
 
-  @Cron('*/17 * * * *')
+  @Cron('0 */6 * * *')
   async handleCronContactsOpenCard() {
-    // if (process.env.mode != 'prod') return;
+    if (process.env.mode != 'prod') return;
     await this.HandleCronContacts('Open');
   }
 
-  @Cron('*/25 * * * *')
+  @Cron('7 */12 * * *')
   async handleCronContactsClosedCard() {
-    // if (process.env.mode != 'prod') return;
+    if (process.env.mode != 'prod') return;
     await this.HandleCronContacts('Closed');
   }
 
