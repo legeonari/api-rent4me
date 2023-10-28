@@ -85,7 +85,7 @@ export class VehiclesService {
         offset: !!filter.page
           ? parseInt(filter.limit) * parseInt(filter.page)
           : 0,
-        limit: parseInt(filter.limit) || 15,
+        limit: parseInt(filter.limit) || 30,
         attributes: ['id', 'route', 'name', 'thumb', 'subtitle', 'status'],
       });
     } catch (e) {
